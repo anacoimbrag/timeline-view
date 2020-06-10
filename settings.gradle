@@ -1,0 +1,3 @@
+include ':timeline'
+include ':sample'
+rootProject.name = "Timeline"

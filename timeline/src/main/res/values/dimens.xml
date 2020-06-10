@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="default_bullet_size">40dp</dimen>
+    <dimen name="default_bullet_padding">4dp</dimen>
+    <dimen name="default_corner_radius">6dp</dimen>
+    <dimen name="default_line_width">2dp</dimen>
+</resources>
