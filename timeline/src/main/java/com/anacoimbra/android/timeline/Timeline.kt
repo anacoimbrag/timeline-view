@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
+import androidx.annotation.VisibleForTesting
 import androidx.core.content.res.ResourcesCompat
 import kotlin.math.absoluteValue
 import kotlin.math.min
@@ -19,21 +20,50 @@ class Timeline @JvmOverloads constructor(
     defStyle: Int = 0
 ) : View(context, attr, defStyle) {
 
-    private var bulletIcon: Int
-    private var bulletIconTint: Int
-    private var bulletSize: Float
-    private var bulletIconPadding: Float
-    private var bulletCornerRadius: Float
-    private var bulletBackground: Int
-    private var bulletType: BulletType
-    private var bulletGravity: BulletGravity
-    private var lineWidth: Float
-    private var lineColor: Int
-    private var linePadding: Float
-    private var lineDashSize: Float
-    private var lineDashGap: Float
-    private var lineType: LineType
-    private var lineVisibility: LineVisibility
+    @VisibleForTesting
+    var bulletIcon: Int
+
+    @VisibleForTesting
+    var bulletIconTint: Int
+
+    @VisibleForTesting
+    var bulletSize: Float
+
+    @VisibleForTesting
+    var bulletIconPadding: Float
+
+    @VisibleForTesting
+    var bulletCornerRadius: Float
+
+    @VisibleForTesting
+    var bulletBackground: Int
+
+    @VisibleForTesting
+    var bulletType: BulletType
+
+    @VisibleForTesting
+    var bulletGravity: BulletGravity
+
+    @VisibleForTesting
+    var lineWidth: Float
+
+    @VisibleForTesting
+    var lineColor: Int
+
+    @VisibleForTesting
+    var linePadding: Float
+
+    @VisibleForTesting
+    var lineDashSize: Float
+
+    @VisibleForTesting
+    var lineDashGap: Float
+
+    @VisibleForTesting
+    var lineType: LineType
+
+    @VisibleForTesting
+    var lineVisibility: LineVisibility
 
     private val backgroundType = TypedValue()
 
