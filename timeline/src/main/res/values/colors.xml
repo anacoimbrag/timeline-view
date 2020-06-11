@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="default_line_color">#B9B9B9</color>
+    <color name="timeline_default_line_color">#B9B9B9</color>
+    <color name="timeline_default_badge_color">#7E57C2</color>
 </resources>

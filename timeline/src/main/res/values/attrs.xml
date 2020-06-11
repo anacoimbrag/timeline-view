@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="Timeline">
         <attr name="bulletIcon" format="reference" />
+        <attr name="bulletIconTint" format="color" />
         <attr name="bulletSize" format="dimension" />
         <attr name="bulletIconPadding" format="dimension" />
         <attr name="bulletCornerRadius" format="dimension" />
@@ -22,17 +23,16 @@
         <attr name="linePadding" format="dimension" />
         <attr name="lineDashSize" format="dimension" />
         <attr name="lineDashGap" format="dimension" />
-        <attr name="lineDotSize" format="dimension" />
         <attr name="lineType" format="enum">
             <enum name="solid" value="1" />
             <enum name="dashed" value="2" />
             <enum name="dotted" value="3" />
         </attr>
         <attr name="lineVisibility" format="enum">
-            <enum name="visible" value="0" />
-            <enum name="invisible" value="1" />
-            <enum name="gone" value="2" />
+            <enum name="both" value="1" />
+            <enum name="top" value="2" />
+            <enum name="bottom" value="3" />
+            <enum name="none" value="4" />
         </attr>
-        <attr name="layout" format="reference" />
     </declare-styleable>
 </resources>
