@@ -11,8 +11,8 @@
     <com.anacoimbra.android.timeline.Timeline
         android:layout_width="wrap_content"
         android:layout_height="100dp"
-        app:bulletBackground="#B8B8B8"
         app:bulletIcon="@android:drawable/ic_btn_speak_now"
+        app:bulletIconTint="#ED0000"
         app:lineDashGap="4dp"
         app:lineType="dotted"
         app:lineVisibility="bottom" />
@@ -23,6 +23,7 @@
         app:bulletBackground="#B8B8B8"
         app:bulletGravity="top"
         app:bulletIcon="@android:drawable/ic_btn_speak_now"
+        app:bulletIconTint="@android:color/white"
         app:bulletType="circle"
         app:linePadding="4dp" />
 
@@ -32,6 +33,7 @@
         app:bulletBackground="#B8B8B8"
         app:bulletGravity="bottom"
         app:bulletIcon="@android:drawable/ic_btn_speak_now"
+        app:bulletIconTint="@android:color/holo_green_dark"
         app:bulletType="square" />
 
     <com.anacoimbra.android.timeline.Timeline

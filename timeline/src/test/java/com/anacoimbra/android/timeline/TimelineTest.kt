@@ -9,6 +9,7 @@ import com.anacoimbra.android.timeline.enums.BulletType
 import com.anacoimbra.android.timeline.enums.LineType
 import com.anacoimbra.android.timeline.enums.LineVisibility
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
@@ -22,8 +23,8 @@ class TimelineTest {
     @Test
     fun `given a timeline with no custom attributes, then it should have default values`() {
         val resources = timeline.context.resources
-        assertEquals(timeline.bulletIcon, 0)
-        assertEquals(timeline.bulletIconTint, 0)
+        assertNull(timeline.iconDrawable)
+        assertNull(timeline.bulletIconTint)
         assertEquals(
             timeline.bulletSize,
             resources.getDimension(R.dimen.timeline_default_bullet_size)
@@ -37,8 +38,12 @@ class TimelineTest {
             resources.getDimension(R.dimen.timeline_default_corner_radius)
         )
         assertEquals(
-            timeline.bulletBackground,
-            R.color.timeline_default_badge_color
+            timeline.bulletBackgroundColor,
+            timeline.getPrimaryColor()
+        )
+        assertEquals(
+            timeline.bulletBackgroundDrawable,
+            null
         )
         assertEquals(timeline.bulletType, BulletType.ROUND)
         assertEquals(timeline.bulletGravity, BulletGravity.CENTER)

@@ -1,14 +1,16 @@
 package com.anacoimbra.android.timeline
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Canvas
 import android.graphics.DashPathEffect
 import android.graphics.Paint
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
-import androidx.annotation.VisibleForTesting
+import androidx.annotation.*
 import androidx.core.content.res.ResourcesCompat
 import com.anacoimbra.android.timeline.enums.BulletGravity
 import com.anacoimbra.android.timeline.enums.BulletType
@@ -18,6 +20,7 @@ import kotlin.math.absoluteValue
 import kotlin.math.min
 
 
+@Suppress("unused")
 class Timeline @JvmOverloads constructor(
     context: Context,
     attr: AttributeSet? = null,
@@ -25,10 +28,10 @@ class Timeline @JvmOverloads constructor(
 ) : View(context, attr, defStyle) {
 
     @VisibleForTesting
-    var bulletIcon: Int
+    var iconDrawable: Drawable?
 
     @VisibleForTesting
-    var bulletIconTint: Int
+    var bulletIconTint: ColorStateList?
 
     @VisibleForTesting
     var bulletSize: Float
@@ -39,14 +42,24 @@ class Timeline @JvmOverloads constructor(
     @VisibleForTesting
     var bulletCornerRadius: Float
 
+    @ColorInt
     @VisibleForTesting
-    var bulletBackground: Int
+    var bulletBackgroundColor: Int
 
     @VisibleForTesting
-    var bulletType: BulletType
+    var bulletBackgroundDrawable: Drawable?
 
-    @VisibleForTesting
-    var bulletGravity: BulletGravity
+    var bulletType: BulletType = BulletType.ROUND
+        set(value) {
+            field = value
+            invalidate()
+        }
+
+    var bulletGravity: BulletGravity = BulletGravity.CENTER
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     @VisibleForTesting
     var lineWidth: Float
@@ -63,16 +76,17 @@ class Timeline @JvmOverloads constructor(
     @VisibleForTesting
     var lineDashGap: Float
 
-    @VisibleForTesting
-    var lineType: LineType
+    var lineType: LineType = LineType.SOLID
+        set(value) {
+            field = value
+            invalidate()
+        }
 
-    @VisibleForTesting
-    var lineVisibility: LineVisibility
-
-    private val backgroundType = TypedValue()
-
-    private val backgroundDrawable: Drawable?
-    private val iconDrawable: Drawable?
+    var lineVisibility: LineVisibility = LineVisibility.BOTH
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     private val dashEffect: DashPathEffect
     private val dotEffect: DashPathEffect
@@ -82,8 +96,10 @@ class Timeline @JvmOverloads constructor(
 
     init {
         context.obtainStyledAttributes(attr, R.styleable.Timeline).apply {
-            bulletIcon = getResourceId(R.styleable.Timeline_bulletIcon, 0)
-            bulletIconTint = getColor(R.styleable.Timeline_bulletIconTint, 0)
+            val bulletIcon = getResourceId(R.styleable.Timeline_bulletIcon, 0)
+            iconDrawable =
+                if (bulletIcon != 0) resources.getDrawable(bulletIcon, context.theme) else null
+            bulletIconTint = getColorStateList(R.styleable.Timeline_bulletIconTint)
             val defaultSize = resources.getDimension(R.dimen.timeline_default_bullet_size)
             bulletSize = getDimension(R.styleable.Timeline_bulletSize, defaultSize)
             val defaultPadding = resources.getDimension(R.dimen.timeline_default_bullet_padding)
@@ -91,11 +107,10 @@ class Timeline @JvmOverloads constructor(
             val defaultCornerRadius = resources.getDimension(R.dimen.timeline_default_corner_radius)
             bulletCornerRadius =
                 getDimension(R.styleable.Timeline_bulletCornerRadius, defaultCornerRadius)
-            bulletBackground =
-                getResourceId(
-                    R.styleable.Timeline_bulletBackground,
-                    R.color.timeline_default_badge_color
-                )
+            val defaultBulletColor = getColorForAttribute(R.attr.colorPrimary, R.color.timeline_default_badge_color)
+            bulletBackgroundDrawable = getDrawable(R.styleable.Timeline_bulletBackground)
+            bulletBackgroundColor =
+                getColor(R.styleable.Timeline_bulletBackground, defaultBulletColor)
             val type = getInt(R.styleable.Timeline_bulletType, 4)
             bulletType = BulletType.getByType(type) ?: BulletType.ROUND
             val gravity = getInt(R.styleable.Timeline_bulletGravity, 2)
@@ -103,7 +118,7 @@ class Timeline @JvmOverloads constructor(
             val defaultLineWidth = resources.getDimension(R.dimen.timeline_default_line_width)
             lineWidth = getDimension(R.styleable.Timeline_lineWidth, defaultLineWidth)
             val defaultLineColor =
-                ResourcesCompat.getColor(resources, R.color.timeline_default_line_color, null)
+                getColorForAttribute(R.attr.colorAccent, R.color.timeline_default_line_color)
             lineColor =
                 getColor(R.styleable.Timeline_lineColor, defaultLineColor)
             linePadding = getDimension(R.styleable.Timeline_linePadding, 0f)
@@ -116,12 +131,6 @@ class Timeline @JvmOverloads constructor(
             val lineVisibilityInt = getInt(R.styleable.Timeline_lineVisibility, 1)
             lineVisibility = LineVisibility.getByType(lineVisibilityInt) ?: LineVisibility.BOTH
         }.recycle()
-
-        resources.getValue(bulletBackground, backgroundType, true)
-        backgroundDrawable =
-            if (backgroundType.type < TypedValue.TYPE_FIRST_COLOR_INT || backgroundType.type > TypedValue.TYPE_LAST_COLOR_INT)
-                resources.getDrawable(bulletBackground, null) else null
-        iconDrawable = if (bulletIcon != 0) resources.getDrawable(bulletIcon, null) else null
 
         dashEffect = DashPathEffect(floatArrayOf(lineDashSize, lineDashGap), 0f)
         dotEffect = DashPathEffect(floatArrayOf(lineWidth, lineDashGap), 0f)
@@ -182,6 +191,71 @@ class Timeline @JvmOverloads constructor(
         drawLines(canvas, bulletLeft, bulletTop, bulletRight, bulletBottom)
     }
 
+    fun setIcon(@DrawableRes icon: Int) {
+        iconDrawable = ResourcesCompat.getDrawable(resources, icon, context.theme)
+        invalidate()
+    }
+
+    fun setIconTint(colorStateList: ColorStateList?) {
+        bulletIconTint = colorStateList
+        invalidate()
+    }
+
+    fun setIconTint(@ColorRes color: Int) {
+        bulletIconTint = ResourcesCompat.getColorStateList(resources, color, context.theme)
+        invalidate()
+    }
+
+    fun setBulletSize(@DimenRes size: Int) {
+        bulletSize = resources.getDimension(size)
+        invalidate()
+    }
+
+    fun setIconPadding(@DimenRes padding: Int) {
+        bulletIconPadding = resources.getDimension(padding)
+        invalidate()
+    }
+
+    fun setBulletCornerRadius(@DimenRes radius: Int) {
+        bulletCornerRadius = resources.getDimension(radius)
+        invalidate()
+    }
+
+    fun setBulletBackground(@ColorRes color: Int) {
+        bulletBackgroundColor = ResourcesCompat.getColor(resources, color, context.theme)
+        invalidate()
+    }
+
+    fun setBulletBackgroundDrawable(@DrawableRes background: Int) {
+        bulletBackgroundDrawable = ResourcesCompat.getDrawable(resources, background, context.theme)
+        invalidate()
+    }
+
+    fun setLineWidth(@DimenRes lineWidth: Int) {
+        this.lineWidth = resources.getDimension(lineWidth)
+        invalidate()
+    }
+
+    fun setLineColorResource(@ColorRes color: Int) {
+        lineColor = ResourcesCompat.getColor(resources, color, context.theme)
+        invalidate()
+    }
+
+    fun setLinePadding(@DimenRes padding: Int) {
+        linePadding = resources.getDimension(padding)
+        invalidate()
+    }
+
+    fun setLineDashSize(@DimenRes size: Int) {
+        lineDashSize = resources.getDimension(size)
+        invalidate()
+    }
+
+    fun setLineDashGap(@DimenRes gap: Int) {
+        lineDashGap = resources.getDimension(gap)
+        invalidate()
+    }
+
     private fun drawBackground(
         canvas: Canvas,
         left: Float,
@@ -189,8 +263,8 @@ class Timeline @JvmOverloads constructor(
         right: Float,
         bottom: Float
     ) {
-        if (backgroundType.type >= TypedValue.TYPE_FIRST_COLOR_INT && backgroundType.type <= TypedValue.TYPE_LAST_COLOR_INT) {
-            bulletPaint.color = ResourcesCompat.getColor(resources, bulletBackground, null)
+        if (bulletBackgroundDrawable == null || bulletBackgroundDrawable is ColorDrawable) {
+            bulletPaint.color = bulletBackgroundColor
             when (bulletType) {
                 BulletType.ICON -> bulletIconPadding = 0f
                 BulletType.SQUARE -> canvas.drawRect(
@@ -216,27 +290,27 @@ class Timeline @JvmOverloads constructor(
                     bulletPaint
                 )
             }
-        } else if (backgroundType.type == TypedValue.TYPE_REFERENCE) {
-            backgroundDrawable?.setBounds(
+        } else {
+            bulletBackgroundDrawable?.setBounds(
                 left.toInt(),
                 top.toInt(),
                 right.toInt(),
                 bottom.toInt()
             )
-            backgroundDrawable?.draw(canvas)
+            bulletBackgroundDrawable?.draw(canvas)
         }
     }
 
     private fun drawIcon(canvas: Canvas, left: Float, top: Float, right: Float, bottom: Float) {
         if (iconDrawable != null) {
-            if (bulletIconTint != 0)
-                iconDrawable.setTint(bulletIconTint)
+            if (bulletIconTint != null)
+                iconDrawable?.setTintList(bulletIconTint)
             val iconLeft = left.toInt() + bulletIconPadding.toInt()
             val iconRight = right.toInt() - bulletIconPadding.toInt()
             val iconTop = top + bulletIconPadding.toInt()
             val iconBottom = bottom - bulletIconPadding.toInt()
-            iconDrawable.setBounds(iconLeft, iconTop.toInt(), iconRight, iconBottom.toInt())
-            iconDrawable.draw(canvas)
+            iconDrawable?.setBounds(iconLeft, iconTop.toInt(), iconRight, iconBottom.toInt())
+            iconDrawable?.draw(canvas)
         }
     }
 
@@ -257,5 +331,16 @@ class Timeline @JvmOverloads constructor(
                 height - paddingBottom.toFloat(),
                 linePaint
             )
+    }
+
+    @VisibleForTesting
+    fun getColorForAttribute(attr: Int, @ColorRes defaultColor: Int): Int {
+        return try {
+            val typedValue = TypedValue()
+            context.theme.resolveAttribute(attr, typedValue, true)
+            typedValue.data
+        } catch (e: Exception) {
+            ResourcesCompat.getColor(resources, defaultColor, context.theme)
+        }
     }
 }
