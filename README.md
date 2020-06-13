@@ -46,23 +46,23 @@ It is very easy to use this lib, you just need to add `<Timeline>` tag in your X
 
 #### Timeline Attributes
 
-| Attribute | Type | Default |
-| --- |---| :---: |
-| `bulletIcon`        | drawable          | -       |
-| `bulletIconTint`    | color             | -       |
-| `bulletSize`        | dimension         | `30dp`  |
-| `bulletIconPadding` | dimension         | `4dp`   |
-| `bulletCornerRadius`<sup>1</sup> | dimension         | `6dp`   | 
-| `bulletBackground`  | color \| drawable | ![#7E57C2](https://via.placeholder.com/15/7E57C2/000000?text=+) `#7E57C2`  | 
-| `bulletType`        | BulletType        | `round` |
-| `bulletSize`        | BulletGravity     | `center`|
-| `lineWidth`         | dimension         | `2dp`   |
-| `lineColor`         | color             | ![#B9B9B9](https://via.placeholder.com/15/B9B9B9/000000?text=+) `#B9B9B9`  | 
-| `linePadding`       | dimension         | `0dp`   |
-| `lineDashSize`<sup>2</sup>      | dimension         | `4dp`   |
-| `lineDashGap`<sup>3</sup>       | dimension         | `4dp`   |
-| `lineType`          | LineType          | `solid` |
-| `lineVisibility`    | LineVisibility    | `both`  |
+| Attribute | Type | Default | Setter |
+| --- |---| :---: | --- |
+| `bulletIcon`        | drawable          | -       | `setIconTint(@DrawableRes Int)`
+| `bulletIconTint`    | color             | -       | `setIconTint(colorStateList)` <br/> `setIconTint(@ColorRes Int)`
+| `bulletSize`        | dimension         | `30dp`  | `setBulletSize(@DimenRes Int)`
+| `bulletIconPadding` | dimension         | `4dp`   | `setIconPadding(@DimenRes Int)`
+| `bulletCornerRadius`<sup>1</sup> | dimension         | `6dp`   | `setBulletCornerRadius(@DimenRes Int)`
+| `bulletBackground`  | color \| drawable | primaryColor <br/> ![#7E57C2](https://via.placeholder.com/15/7E57C2/000000?text=+) `#7E57C2`  | `setBulletBackground(@ColorRes Int)` <br/> `setBulletBackground(@DrawableRes Int)`
+| `bulletType`        | BulletType        | `round` | `bulletType = BulletType.ROUND`
+| `bulletGravity`        | BulletGravity     | `center`| `bulletGravity = BulletGravity.CENTER`
+| `lineWidth`         | dimension         | `2dp`   | `setLineWidth(@DimenRes Int)`
+| `lineColor`         | color             | colorAccent <br/>![#B9B9B9](https://via.placeholder.com/15/B9B9B9/000000?text=+) `#B9B9B9`  |  `setLineColorResource(@ColorRes Int)`
+| `linePadding`       | dimension         | `0dp`   | `setLinePadding(@DimenRes Int)`
+| `lineDashSize`<sup>2</sup>      | dimension         | `4dp`   | `setLineDashSize(@DimenRes Int)`
+| `lineDashGap`<sup>3</sup>       | dimension         | `4dp`   | `setLineDashGap(@DimenRes Int)`
+| `lineType`          | LineType          | `solid` | `lineType = LineType.SOLID`
+| `lineVisibility`    | LineVisibility    | `both`  | `lineVisibility = LineVisibility.CENTER`
 
 **BulletType**
 
@@ -99,5 +99,7 @@ It is very easy to use this lib, you just need to add `<Timeline>` tag in your X
 | `LineVisibility.NONE`  | `none`  | ![Line Visibility None](screenshot/line-visibility-none.png)
 
 <sup>1 • Only works with BulletType `round`</sup>
+
 <sup>2 • Only works with LineType `dashed`</sup>
+
 <sup>3 • Only works with LineType `dashed` or `dotted`</sup>
