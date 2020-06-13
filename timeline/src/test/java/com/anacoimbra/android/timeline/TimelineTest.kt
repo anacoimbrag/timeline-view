@@ -39,7 +39,7 @@ class TimelineTest {
         )
         assertEquals(
             timeline.bulletBackgroundColor,
-            timeline.getPrimaryColor()
+            timeline.getColorForAttribute(R.attr.colorPrimary, R.color.timeline_default_badge_color)
         )
         assertEquals(
             timeline.bulletBackgroundDrawable,
@@ -54,7 +54,7 @@ class TimelineTest {
         )
         assertEquals(
             timeline.lineColor,
-            ResourcesCompat.getColor(resources, R.color.timeline_default_line_color, null)
+            timeline.getColorForAttribute(R.attr.colorAccent, R.color.timeline_default_line_color)
         )
         assertEquals(timeline.linePadding, 0f)
         assertEquals(
