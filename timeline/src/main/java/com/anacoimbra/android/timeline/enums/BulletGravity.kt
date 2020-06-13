@@ -1,4 +1,4 @@
-package com.anacoimbra.android.timeline
+package com.anacoimbra.android.timeline.enums
 
 enum class BulletGravity(private val value: Int) {
     TOP(1), CENTER(2), BOTTOM(3);

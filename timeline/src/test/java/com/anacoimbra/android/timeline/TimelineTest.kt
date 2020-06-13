@@ -3,6 +3,10 @@ package com.anacoimbra.android.timeline
 import android.os.Build
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.anacoimbra.android.timeline.enums.BulletGravity
+import com.anacoimbra.android.timeline.enums.BulletType
+import com.anacoimbra.android.timeline.enums.LineType
+import com.anacoimbra.android.timeline.enums.LineVisibility
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -1,4 +1,4 @@
-package com.anacoimbra.android.timeline
+package com.anacoimbra.android.timeline.enums
 
 enum class BulletType(private val type: Int) {
     ICON(1), SQUARE(2), CIRCLE(3), ROUND(4);

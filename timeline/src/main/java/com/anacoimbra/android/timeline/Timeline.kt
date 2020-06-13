@@ -10,6 +10,10 @@ import android.util.TypedValue
 import android.view.View
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.res.ResourcesCompat
+import com.anacoimbra.android.timeline.enums.BulletGravity
+import com.anacoimbra.android.timeline.enums.BulletType
+import com.anacoimbra.android.timeline.enums.LineType
+import com.anacoimbra.android.timeline.enums.LineVisibility
 import kotlin.math.absoluteValue
 import kotlin.math.min
 
@@ -98,8 +102,10 @@ class Timeline @JvmOverloads constructor(
             bulletGravity = BulletGravity.getByValue(gravity) ?: BulletGravity.CENTER
             val defaultLineWidth = resources.getDimension(R.dimen.timeline_default_line_width)
             lineWidth = getDimension(R.styleable.Timeline_lineWidth, defaultLineWidth)
+            val defaultLineColor =
+                ResourcesCompat.getColor(resources, R.color.timeline_default_line_color, null)
             lineColor =
-                getColor(R.styleable.Timeline_lineColor, R.color.timeline_default_line_color)
+                getColor(R.styleable.Timeline_lineColor, defaultLineColor)
             linePadding = getDimension(R.styleable.Timeline_linePadding, 0f)
             val defaultDashSize = resources.getDimension(R.dimen.timeline_default_line_dash_size)
             lineDashSize = getDimension(R.styleable.Timeline_lineDashSize, defaultDashSize)
@@ -119,7 +125,7 @@ class Timeline @JvmOverloads constructor(
         dashEffect = DashPathEffect(floatArrayOf(lineDashSize, lineDashGap), 0f)
         dotEffect = DashPathEffect(floatArrayOf(lineWidth, lineDashGap), 0f)
 
-        linePaint.color = ResourcesCompat.getColor(resources, lineColor, null)
+        linePaint.color = lineColor
         linePaint.strokeWidth = lineWidth
         when (lineType) {
             LineType.SOLID -> {
@@ -156,12 +162,12 @@ class Timeline @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas?) {
         canvas ?: return
 
-        val bulletLeft = 0f + paddingStart
-        val bulletRight = bulletLeft + bulletSize.toInt()
+        val bulletLeft = paddingStart.toFloat()
+        val bulletRight = bulletLeft + bulletSize - paddingEnd
         val bulletTop: Float = when (bulletGravity) {
-            BulletGravity.TOP -> 0f + paddingTop.toFloat()
+            BulletGravity.TOP -> paddingTop.toFloat()
             BulletGravity.CENTER ->
-                (height).div(2f) - bulletSize.div(2f)
+                (height).div(2f) - bulletSize.div(2f) - paddingTop
             BulletGravity.BOTTOM -> height - paddingBottom - bulletSize
         }
         val bulletBottom: Float = when (bulletGravity) {
@@ -171,7 +177,7 @@ class Timeline @JvmOverloads constructor(
             BulletGravity.BOTTOM -> height - paddingBottom.toFloat()
         }
 
-        drawBackground(canvas, bulletLeft, bulletRight, bulletTop, bulletBottom)
+        drawBackground(canvas, bulletLeft, bulletTop, bulletRight, bulletBottom)
         drawIcon(canvas, bulletLeft, bulletTop, bulletRight, bulletBottom)
         drawLines(canvas, bulletLeft, bulletTop, bulletRight, bulletBottom)
     }
@@ -248,7 +254,7 @@ class Timeline @JvmOverloads constructor(
                 (left + right).div(2f),
                 bottom + linePadding,
                 (left + right).div(2f),
-                this.bottom - paddingBottom.toFloat(),
+                height - paddingBottom.toFloat(),
                 linePaint
             )
     }

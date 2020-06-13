@@ -1,4 +1,4 @@
-package com.anacoimbra.android.timeline
+package com.anacoimbra.android.timeline.enums
 
 enum class LineVisibility(private val type: Int) {
     BOTH(1), TOP(2), BOTTOM(3), NONE(4);
