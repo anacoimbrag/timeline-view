@@ -118,8 +118,9 @@ class Timeline @JvmOverloads constructor(
         }.recycle()
 
         resources.getValue(bulletBackground, backgroundType, true)
-        backgroundDrawable = if (backgroundType.type == TypedValue.TYPE_REFERENCE)
-            resources.getDrawable(bulletBackground, null) else null
+        backgroundDrawable =
+            if (backgroundType.type < TypedValue.TYPE_FIRST_COLOR_INT || backgroundType.type > TypedValue.TYPE_LAST_COLOR_INT)
+                resources.getDrawable(bulletBackground, null) else null
         iconDrawable = if (bulletIcon != 0) resources.getDrawable(bulletIcon, null) else null
 
         dashEffect = DashPathEffect(floatArrayOf(lineDashSize, lineDashGap), 0f)
@@ -135,7 +136,6 @@ class Timeline @JvmOverloads constructor(
         }
 
     }
-
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val widthMode = MeasureSpec.getMode(widthMeasureSpec)

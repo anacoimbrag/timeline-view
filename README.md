@@ -66,37 +66,37 @@ It is very easy to use this lib, you just need to add `<Timeline>` tag in your X
 
 **BulletType**
 
-| Code | XML |
-| --- |---|
-| `BulletType.ICON`   | `icon`   |
-| `BulletType.SQUARE` | `square` |
-| `BulletType.CIRCLE` | `circle` |
-| `BulletType.ROUND`  | `round`  |
+| Code | XML | |
+| --- |---| --- |
+| `BulletType.ICON`   | `icon`   | ![Bullet Type Icon](screenshot/bullet-type-icon.png)
+| `BulletType.SQUARE` | `square` | ![Bullet Type Square](screenshot/bullet-type-square.png)
+| `BulletType.CIRCLE` | `circle` | ![Bullet Type Circle](screenshot/bullet-type-circle.png)
+| `BulletType.ROUND`  | `round`  | ![Bullet Type Round](screenshot/bullet-type-round.png)
 
 **BulletGravity**
 
-| Code | XML |
-| --- |---|
-| `BulletGravity.TOP`   | `top`   |
-| `BulletGravity.CENTER` | `center` |
-| `BulletGravity.BOTTOM` | `bottom` |
+| Code | XML | |
+| --- |---| --- |
+| `BulletGravity.TOP`   | `top`   | ![Bullet Gravity Top](screenshot/bullet-gravity-top.png)
+| `BulletGravity.CENTER` | `center` | ![Bullet Gravity Center](screenshot/bullet-gravity-center.png)
+| `BulletGravity.BOTTOM` | `bottom` | ![Bullet Gravity Bottom](screenshot/bullet-gravity-bottom.png)
 
 **LineType**
 
-| Code | XML |
-| --- |---|
-| `LineType.SOLID`  | `solid`  |
-| `LineType.DASHED` | `dashed` |
-| `LineType.DOTTED` | `dotted` |
+| Code | XML | |
+| --- |---| --- |
+| `LineType.SOLID`  | `solid`  | ![Line Type Solid](screenshot/bullet-gravity-center.png)
+| `LineType.DASHED` | `dashed` | ![Line Type Dashed](screenshot/line-type-dashed.png)
+| `LineType.DOTTED` | `dotted` | ![Line Type Dotted](screenshot/line-type-dotted.png)
 
 **LineVisibility**
 
-| Code | XML |
-| --- |---|
-| `LineVisibility.BOTH`   | `both`   |
-| `LineVisibility.TOP` | `top` |
-| `LineVisibility.BOTTOM` | `bottom` |
-| `LineVisibility.NONE`  | `none`  |
+| Code | XML | |
+| --- |---| --- |
+| `LineVisibility.BOTH`   | `both`   | ![Line Visiblity Both](screenshot/bullet-gravity-center.png)
+| `LineVisibility.TOP` | `top` | ![Line Visibility Top](screenshot/line-visibility-top.png)
+| `LineVisibility.BOTTOM` | `bottom` | ![Line Visibility Bottom](screenshot/line-visibility-bottom.png)
+| `LineVisibility.NONE`  | `none`  | ![Line Visibility None](screenshot/line-visibility-none.png)
 
 <sup>1 • Only works with BulletType `round`</sup>
 <sup>2 • Only works with LineType `dashed`</sup>

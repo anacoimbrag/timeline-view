@@ -11,32 +11,34 @@
     <com.anacoimbra.android.timeline.Timeline
         android:layout_width="wrap_content"
         android:layout_height="100dp"
-        app:bulletGravity="top"
-        app:bulletIcon="@android:drawable/ic_dialog_email"
-        app:bulletIconTint="@color/colorAccent"
+        app:bulletBackground="#B8B8B8"
+        app:bulletIcon="@android:drawable/ic_btn_speak_now"
         app:lineDashGap="4dp"
         app:lineType="dotted"
         app:lineVisibility="bottom" />
 
     <com.anacoimbra.android.timeline.Timeline
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        app:bulletIcon="@android:drawable/ic_delete"
+        android:layout_height="50dp"
+        app:bulletBackground="#B8B8B8"
+        app:bulletGravity="top"
+        app:bulletIcon="@android:drawable/ic_btn_speak_now"
         app:bulletType="circle"
         app:linePadding="4dp" />
 
     <com.anacoimbra.android.timeline.Timeline
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
+        app:bulletBackground="#B8B8B8"
         app:bulletGravity="bottom"
         app:bulletIcon="@android:drawable/ic_btn_speak_now"
-        app:bulletType="icon" />
+        app:bulletType="square" />
 
     <com.anacoimbra.android.timeline.Timeline
         android:layout_width="wrap_content"
         android:layout_height="100dp"
-        app:bulletIcon="@android:drawable/ic_dialog_alert"
-        app:bulletType="square"
+        app:bulletIcon="@android:drawable/ic_btn_speak_now"
+        app:bulletType="icon"
         app:lineDashGap="5dp"
         app:lineDashSize="6dp"
         app:lineType="dashed"
