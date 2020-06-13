@@ -1,6 +1,7 @@
 package com.anacoimbra.android.timeline
 
 import android.os.Build
+import androidx.core.content.res.ResourcesCompat
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.anacoimbra.android.timeline.enums.BulletGravity
@@ -46,7 +47,10 @@ class TimelineTest {
             timeline.lineWidth,
             resources.getDimension(R.dimen.timeline_default_line_width)
         )
-        assertEquals(timeline.lineColor, R.color.timeline_default_line_color)
+        assertEquals(
+            timeline.lineColor,
+            ResourcesCompat.getColor(resources, R.color.timeline_default_line_color, null)
+        )
         assertEquals(timeline.linePadding, 0f)
         assertEquals(
             timeline.lineDashSize,
